@@ -34,16 +34,16 @@ endif()
 #
 #	Discover all library code
 #
-file(GLOB_RECURSE SOURCES FOLLOW_SYMLINKS "${PROJECT_SOURCE_DIR}/src/*.cpp")
-file(GLOB_RECURSE INCLUDES FOLLOW_SYMLINKS "${PROJECT_SOURCE_DIR}/include/*.hpp")
+file(GLOB_RECURSE PROJECT_SRCS FOLLOW_SYMLINKS "${PROJECT_SOURCE_DIR}/src/*.cpp")
+file(GLOB_RECURSE PROJECT_INCS FOLLOW_SYMLINKS "${PROJECT_SOURCE_DIR}/include/*.hpp")
 
 
 #
 #	Setup library by root
 #
 if (BUILD_LIBRARY_SHARED)
-	add_library("${PROJECT_LIB_NAME}" STATIC "")
-	set_target_properties(${SDK_TARGET_NAME} PROPERTIES SUFFIX ".so")
+	add_library("${PROJECT_LIB_NAME}" SHARED "")
+	set_target_properties("${PROJECT_LIB_NAME}" PROPERTIES SUFFIX ".so")
 else()
 	add_library("${PROJECT_LIB_NAME}" STATIC "")
 	set_target_properties("${PROJECT_LIB_NAME}" PROPERTIES POSITION_INDEPENDENT_CODE ON)
@@ -53,5 +53,5 @@ endif()
 
 target_include_directories("${PROJECT_LIB_NAME}" PRIVATE  "${PROJECT_SOURCE_DIR}/include")
 
-target_sources("${PROJECT_LIB_NAME}" PUBLIC "${INCLUDES}")	# include library headers
-target_sources("${PROJECT_LIB_NAME}" PRIVATE "${SOURCES}")	# include library source code
+target_sources("${PROJECT_LIB_NAME}" PUBLIC "${PROJECT_INCS}")	# include library headers
+target_sources("${PROJECT_LIB_NAME}" PRIVATE "${PROJECT_SRCS}")	# include library source code
