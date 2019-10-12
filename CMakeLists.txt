@@ -3,6 +3,19 @@
 set(PROJECT_NAME "templated-project")
 set(PROJECT_LIB_NAME "project-library-name")
 
+#
+#	Config
+#	
+
+#	Path to cmake modules
+set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
+
+#	Don't allow in-source builds
+
+if ("${CMAKE_SOURCE_DIR}" STREQUAL "${CMAKE_BINARY_DIR}")
+	message(FATAL_ERROR "You cannot build in a directory that contains a cmake file.")
+endif()
+
 
 #
 #	Project Name
@@ -24,9 +37,19 @@ option(BUILD_TESTS "Build the tests." OFF)
 #	Include sub-projects.
 #
 
+#	Applications
+if (BUILD_APPLICATIONS)
+	add_subdirectory("${PROJECT_SOURCE_DIR}/applications")
+endif()
+
 #	Examples
 if (BUILD_EXAMPLES)
 	add_subdirectory ("${PROJECT_SOURCE_DIR}/examples/my-example")
+endif()
+
+#	Tests
+if (BUILD_TESTS)
+	add_subdirectory(tests)
 endif()
 
 
@@ -55,3 +78,15 @@ target_include_directories("${PROJECT_LIB_NAME}" PRIVATE  "${PROJECT_SOURCE_DIR}
 
 target_sources("${PROJECT_LIB_NAME}" PUBLIC "${INCLUDES}")	# include library headers
 target_sources("${PROJECT_LIB_NAME}" PRIVATE "${SOURCES}")	# include library source code
+
+
+#
+#	Dependencies
+#
+
+
+
+#
+#	Print additional information
+#
+#add_feature_info()
