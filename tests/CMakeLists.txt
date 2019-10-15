@@ -20,6 +20,11 @@ set(CMAKE_BINARY_DIR "${CMAKE_BINARY_DIR}/bin")
 enable_testing()
 set(PROJECT_TEST_NAME templated-project-tests-gtestsuite)
 
+include (FetchContent)
+
+#
+#	Download Google/googletest
+#
 
 #	Git googletest package
 FetchContent_Declare(
@@ -32,4 +37,9 @@ FetchContent_GetProperties(googletest)
 if (NOT googletest_POPULATED)
 	FetchContent_Populate(googletest)
 	add_subdirectory("${googletest_SOURCE_DIR}" "${googletest_BINARY_DIR}")
+
+	set_target_properties(gmock PROPERTIES FOLDER extern/google)
+	set_target_properties(gmock_main PROPERTIES FOLDER extern/google)
+	set_target_properties(gtest PROPERTIES FOLDER extern/google)
+	set_target_properties(gtest_main PROPERTIES FOLDER extern/google)
 endif()
