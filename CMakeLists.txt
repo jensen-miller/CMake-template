@@ -45,6 +45,7 @@ endif()
 #	Examples
 if (BUILD_EXAMPLES)
 	add_subdirectory ("${PROJECT_SOURCE_DIR}/examples/my-example")
+	add_subdirectory ("${PROJECT_SOURCE_DIR}/examples/Arduino")
 endif()
 
 #	Tests
